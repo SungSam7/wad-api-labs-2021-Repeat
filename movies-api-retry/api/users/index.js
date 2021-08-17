@@ -5,12 +5,12 @@ const router = express.Router(); // eslint-disable-line
 
 // Get all users
 router.get('/', (req, res) => {
-    User.find().then(users =>  res.status(200).json(users));
+    User.find().then(users =>  res.status(200).json(users ,{success:true,token:"FakeTokenForNow"})).catch(next);;
 });
 
 // register
-router.post('/', (req, res) => {
-        new User(req.body).save().then(user => res.status(200).json({success:true,token:"FakeTokenForNow"}))
+router.post('/', (req, res ,next) => {
+    User.create(req.body).then(user => res.status(200).json({success:true,token:"FakeTokenForNow"})).catch(next);
 });
 
 // Update a user
@@ -21,6 +21,6 @@ router.put('/:id',  (req, res) => {
     }, req.body, {
       upsert: false,
     })
-    .then(user => res.json(200, user));
+    .then(user => res.json(200, user, {success:true,token:"FakeTokenForNow"})).catch(next);
 });
 export default router;
