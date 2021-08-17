@@ -4,6 +4,7 @@ import moviesRouter from './api/movies';
 import bodyParser from 'body-parser';
 import './db';
 import {loadUsers} from './seedData';
+import usersRouter from './api/users';
 
 
 dotenv.config();
@@ -17,12 +18,12 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍, ${err.stack} `);
 
 
-  if (process.env.SEED_DB) {
-  loadUsers();
-  }
+  
  
 };
-
+if (process.env.SEED_DB) {
+  loadUsers();
+  }
 const app = express();
 
 const port = process.env.PORT;
@@ -31,6 +32,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use('/api/movies', moviesRouter)
+app.use('/api/users', usersRouter);
 app.use(errHandler);;
 
 app.listen(port, () => {

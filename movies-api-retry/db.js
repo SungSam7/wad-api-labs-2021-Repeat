@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 // Connect to database
-mongoose.connect("mongodb://localhost:27017/movies_db");
+mongoose.connect(process.env.MONGO_DB);
 const db = mongoose.connection;
 
 db.on('error', (err) => {
