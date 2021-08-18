@@ -2,7 +2,7 @@ import express from 'express';
 import User from './userModel';
 import jwt from 'jsonwebtoken';
 import movieModel from '..//movies/movieModel';
-import db from './db'
+
 
 const router = express.Router(); // eslint-disable-line
 
