@@ -12,6 +12,8 @@ import passport from './authenticate';
 
 dotenv.config();
 
+const app = express();
+
 const errHandler = (err, req, res, next) => {
   /* if the error in development then send stack trace to display whole error,
   if it's in production then just send error message  */
@@ -29,18 +31,22 @@ if (process.env.SEED_DB) {
   loadUsers();
   loadMovies();
 }
-const app = express();
+
 
 
 
 const port = process.env.PORT;
+
+
 app.use(session({
   secret: 'ilikecake',
   resave: true,
   saveUninitialized: true
 }));
 
+
 app.use(passport.initialize());
+
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 
 
@@ -59,4 +65,4 @@ app.listen(port, () => {
 });
 
 
-//app.use('/api/movies', authenticate, moviesRouter);
+// app.use('/api/movies', authenticate, moviesRouter);
